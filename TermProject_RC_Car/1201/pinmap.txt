@@ -1,0 +1,9 @@
+PB0  -ADC
+PA2,3 usart
+
+
+PA 6 - TIM3 ch1 - pwm servo motor
+PB 6 - TIM4 ch1 - pwm dc motor
+PA 0 - TIM5 ch1 - pwm buzzer // 만약 0 안되면 TIM2 pin remap해서 쓰기.
+
+

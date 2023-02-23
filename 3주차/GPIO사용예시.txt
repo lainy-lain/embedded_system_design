@@ -1,0 +1,27 @@
+int main() {
+
+        *((volatile unsigned *)0x40021018) |= 0x20;
+		// ? Reset and Clock control RCC인것 같다.
+				
+        *(volatile unsigned *)(0x40011400 + 0x04) &= ~0xf000;
+		// Port D Starting Address + GPIOx_CRH Address offset(0x04)
+		// 우리가 쓰려는 PD11은 GPIOx_CRH register에 있다.
+		// PD11은 15, 14, 13, 12bit 부분에 있다.
+		// 그러므로 ~0xf000을 and해줌으로써 15~12bit 부분을 0으로 초기화해주는 것이다.
+				
+        *(volatile unsigned *)(0x40011400 + 0x04) |= 0x8000;
+		// 15~12 bit 부분을 0으로 초기화 한 후, input mode를 pull-up / pull-down으로 바꿔준다.
+		// 즉, 15~12 bit 부분을 1000(0x8)로 바꿔주기 위해 이 코드를 실행한 것이다.
+        
+	while (1) {
+          if(!(*((volatile unsigned *)(0x40011400 + 0x08))&0x800))
+			// 0x4001 1400 + 0x08 =>GPIOD의 input data register address
+			// PD11이므로 IDR11을 검사.
+			// input이 없는 상태에선 XXXX(floating)상태. (0도 1도 아닌 상태)
+			// PD11(USER S1)이 풀업방식이라 누르면 IDR11이 floating 상태에서 0이 된다.
+			// 만약 풀다운이면 if 안에 !를 빼줘야 한다.
+          {
+            printf("PD11 on\n");
+          }
+	}
+}

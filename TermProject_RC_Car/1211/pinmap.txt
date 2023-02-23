@@ -1,0 +1,18 @@
+PB0  -ADC
+PA2,3 usart
+
+
+PA 6 - TIM3 ch1 - pwm servo motor
+PB 6 - TIM4 ch1 - pwm dc motor
+
+
+PC 0,2,13,15 앞 드라이버
+PD 8,10,12,14 뒤 드라이버
+
+PC10(TRIG), 12(ECHO) 앞부분 초음파
+PC1(TRIG), 3(ECHO) 뒷부분 초음파 
+
+TIM2 ch1 - counter for 초음파센서
+
+
+
